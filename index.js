@@ -1,18 +1,6 @@
+
+
 const { create, decryptMedia } = require("@open-wa/wa-automate");
-
-const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3030;
-
-// your code
-
-app.listen(PORT, () => {
-  console.log(`server started on port ${PORT}`);
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 function start(client) {
   client.onAnyMessage(async (message) => {
@@ -22,7 +10,7 @@ function start(client) {
       author: "@xkaiserw",
       keepScale: true,
     };
-    if (isMedia && caption?.toLowerCase() === ".sticker") {
+    if (isMedia && caption?.toLowerCase() === "sticker") {
       if (mimetype) {
         const mediaData = await decryptMedia(message);
         const receiver = isMe ? to : from;
@@ -41,3 +29,14 @@ function start(client) {
 }
 
 create().then(start);
+
+
+ 
+
+
+
+
+
+
+
+
