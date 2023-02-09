@@ -1,5 +1,3 @@
-
-
 const { create, decryptMedia } = require("@open-wa/wa-automate");
 
 function start(client) {
@@ -10,11 +8,11 @@ function start(client) {
       author: "@xkaiserw",
       keepScale: true,
     };
-    if (isMedia && caption?.toLowerCase() === "sticker") {
-      if (mimetype) {
+    if (isMedia && typeof caption === 'string' && caption.toLowerCase() === "sticker") {
+      if (mimetype.startsWith("image/") || mimetype.startsWith("video/")) {
         const mediaData = await decryptMedia(message);
-        const receiver = isMe ? to : from;
-        if (type === "video") {
+        const receiver = isMe ? from : from;
+        if (mimetype.startsWith("video/")) {
           await client.sendMp4AsSticker(receiver, mediaData, null, stickerMetadata);
         } else {
           await client.sendImageAsSticker(
@@ -28,15 +26,4 @@ function start(client) {
   });
 }
 
-create().then(start);
-
-
- 
-
-
-
-
-
-
-
-
+create().then(start).catch((error) => console.error(error));
